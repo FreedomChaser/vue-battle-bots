@@ -1,28 +1,50 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <header>
+      <button @click='setCreate'>Create</button>
+      <p>Battle Bots</p>
+      <button @click='setBots'>Collection</button>
+    </header>
+    <body>
+      <create v-if='view==="create"' :submited='setBotsArr'></create>
+      <botlist v-else :botsArr='botsArr'></botlist>
+    </body>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Create from "./components/Create";
+import Botlist from "./components/Botlist";
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  data: function() {
+    return {
+      view: "create",
+      botsArr: []
+    };
+  },
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  methods: {
+    setBots: function() {
+      this.view = "bots";
+    },
+    setCreate: function() {
+      this.view = "create";
+    },
+    setBotsArr: function(bot, attack, health) {
+      this.botsArr.push({
+        bot,
+        attack,
+        health,
+        current: health
+      });
+      
+    }
+  },
+
+  components: {
+    Create,
+    Botlist
+  }
+};
+</script>
